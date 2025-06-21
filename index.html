@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte: Impacto del Escalado de Datos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .badge-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .badge-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .chart-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">Trabajo Final de ANN</h1>
+            <div class="my-2"></div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">¨Impacto del Escalado de Datos en el Entrenamiento de Modelos de ML¨</h2>
+            <p class="mt-4 text-lg text-gray-600">Randy Santiago Riverol Arévalo</p>
+        </header>
+
+        <main class="space-y-12">
+            <div class="card p-6">
+                <h2 class="text-2xl font-semibold mb-3">Introducción y Objetivo</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    Este reporte analiza los resultados de dos experimentos de Machine Learning para determinar el impacto de la normalización y el escalado de datos en el rendimiento y la eficiencia de los modelos. Se investiga si estas técnicas de preprocesamiento afectan la precisión y el tiempo de entrenamiento, una hipótesis fundamental en el campo del aprendizaje automático.
+                    <br><br>
+                    Se examinaron dos casos de estudio distintos:
+                </p>
+                <ul class="list-disc list-inside mt-3 space-y-1 text-gray-700">
+                    <li><b>Caso de Regresión:</b> Predicción de costos de permisos de construcción utilizando una red neuronal (`MLPRegressor`).</li>
+                    <li><b>Caso de Clasificación:</b> Predicción de hábitos de consumo de alcohol, también con una red neuronal (Keras).</li>
+                </ul>
+            </div>
+
+            <section class="card p-6">
+                <h2 class="text-2xl font-semibold mb-2">Caso 1: Regresión - Predicción de Costos de Permisos</h2>
+                <p class="mb-6 text-gray-600">En este escenario, se utilizó una red neuronal para predecir el costo de un permiso de construcción. Se comparó un modelo entrenado con datos brutos contra uno con datos normalizados usando `StandardScaler`.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Resultados Cuantitativos</h3>
+                        <div class="overflow-x-auto rounded-lg border">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="p-3 font-semibold">Métrica</th>
+                                        <th class="p-3 font-semibold">Sin Normalizar</th>
+                                        <th class="p-3 font-semibold">Con Normalización</th>
+                                        <th class="p-3 font-semibold">Mejora</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-medium">Tiempo de Entrenamiento</td>
+                                        <td class="p-3">~330.1 seg</td>
+                                        <td class="p-3">~150.5 seg</td>
+                                        <td class="p-3"><span class="badge badge-success">~54% más rápido</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-medium">R² Score (Precisión)</td>
+                                        <td class="p-3">-0.0006</td>
+                                        <td class="p-3">0.2012</td>
+                                        <td class="p-3"><span class="badge badge-success">Mejora Drástica</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-medium">MSE (Error)</td>
+                                        <td class="p-3">~8.16 x 10¹²</td>
+                                        <td class="p-3">~6.51 x 10¹²</td>
+                                        <td class="p-3"><span class="badge badge-success">Reducción del 20%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Gráfica de Resultados</h3>
+                        <div class="w-full h-64 flex items-center justify-center">
+                            <img src="2.png" alt="Gráfica de resultados de regresión" class="max-h-60 max-w-full rounded-lg border border-gray-300 shadow" />
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 class="font-semibold text-blue-800">Conclusión del Caso 1</h4>
+                    <p class="text-blue-700 mt-1">La normalización de datos tuvo un impacto <b class="font-semibold">extraordinariamente positivo</b>. No solo redujo el tiempo de entrenamiento a más de la mitad, sino que transformó un modelo inútil (R² negativo) en uno con capacidad predictiva, aunque modesta. Esto demuestra que para las redes neuronales, que son sensibles a la escala de las características, la normalización es un paso indispensable para una convergencia eficiente y un rendimiento óptimo.</p>
+                </div>
+            </section>
+
+            <section class="card p-6">
+                <h2 class="text-2xl font-semibold mb-2">Caso 2: Clasificación - Predicción de Hábito Alcohólico</h2>
+                <p class="mb-6 text-gray-600">Para este problema de clasificación binaria, se usó una red neuronal con Keras para predecir si una persona consume alcohol. Se comparó el entrenamiento con datos brutos versus datos escalados.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Resultados Cuantitativos</h3>
+                        <div class="overflow-x-auto rounded-lg border">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="p-3 font-semibold">Métrica</th>
+                                        <th class="p-3 font-semibold">Sin Escalar</th>
+                                        <th class="p-3 font-semibold">Con Escalado</th>
+                                        <th class="p-3 font-semibold">Mejora</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-medium">Tiempo de Entrenamiento</td>
+                                        <td class="p-3">~49.2 seg</td>
+                                        <td class="p-3">~49.6 seg</td>
+                                        <td class="p-3"><span class="badge badge-info">Similar</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-3 font-medium">Accuracy</td>
+                                        <td class="p-3">73.22%</td>
+                                        <td class="p-3">73.85%</td>
+                                        <td class="p-3"><span class="badge badge-success">Leve mejora</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Curvas de Aprendizaje (Accuracy)</h3>
+                        <div class="w-full h-64 flex items-center justify-center">
+                            <img src="1.png" alt="Curvas de aprendizaje (accuracy)" class="max-h-60 max-w-full rounded-lg border border-gray-300 shadow" />
+                        </div>
+                        <p class="text-xs text-center text-gray-500 mt-2">El modelo escalado alcanza un rendimiento máximo mucho más rápido (épocas 2-3) en comparación con el modelo sin escalar.</p>
+                    </div>
+                </div>
+                 <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 class="font-semibold text-green-800">Conclusión del Caso 2</h4>
+                    <p class="text-green-700 mt-1">
+                        Aunque la diferencia en la precisión final y el tiempo total es leve, la verdadera ventaja del escalado se observa en la <b class="font-semibold">velocidad de convergencia</b>. Las curvas de aprendizaje muestran claramente que el modelo con datos escalados alcanzó su rendimiento máximo en apenas <b class="font-semibold">2-3 épocas</b>, mientras que el modelo sin escalar necesitó las 5 épocas completas para llegar a un nivel similar. Esto significa que el escalado permite un entrenamiento mucho más eficiente, logrando resultados óptimos en menos tiempo y con menor costo computacional.
+                    </p>
+                </div>
+            </section>
+            
+            <section class="card p-6">
+                 <h2 class="text-2xl font-semibold mb-2">Análisis Adicional: El Caso de XGBoost</h2>
+                <p class="mb-4 text-gray-700">En tus experimentos también se probó un modelo <b class="font-semibold">XGBoost</b>, un algoritmo basado en árboles de decisión. Los resultados mostraron que, a diferencia de las redes neuronales, el escalado de datos tuvo un impacto mínimo tanto en el rendimiento (R² de ~0.45 en ambos casos) como en el tiempo de entrenamiento.</p>
+                <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <h4 class="font-semibold text-yellow-800">¿Por qué esta diferencia?</h4>
+                    <p class="text-yellow-700 mt-1">
+                        Los modelos basados en árboles, como XGBoost, LightGBM o Random Forest, no son sensibles a la escala de las características. Toman decisiones dividiendo los datos en cada nodo basándose en umbrales ("feature > x"). Estas divisiones son invariantes a la escala; si se multiplican todos los valores de una característica por 10, el punto de división óptimo también se multiplicará por 10, pero el resultado de la división será el mismo. Por esta razón, el escalado no suele ser un paso necesario para este tipo de algoritmos.
+                    </p>
+                </div>
+            </section>
+
+            <div class="card p-8 bg-gray-800 text-white">
+                <h2 class="text-3xl font-bold mb-4 text-center">Conclusiones Generales</h2>
+                <div class="text-gray-300 leading-relaxed space-y-4">
+                    <p><span class="font-semibold text-white">El escalado es crucial para modelos basados en gradiente:</span> Los experimentos demuestran de manera contundente que para las redes neuronales, que dependen del descenso de gradiente, el escalado de características es fundamental. Mejora la velocidad de convergencia y puede ser la diferencia entre un modelo funcional y uno que no aprende.</p>
+                    <p><span class="font-semibold text-white">El impacto varía según el modelo:</span> Mientras que las redes neuronales se benefician enormemente, los modelos basados en árboles son en gran medida indiferentes a la escala de los datos. Esto subraya la importancia de conocer el funcionamiento interno de los algoritmos que se utilizan.</p>
+                    <p class="pt-2 border-t border-gray-700"><b class="font-semibold text-white">Recomendación final:</b> Como práctica general, es altamente recomendable escalar o normalizar siempre los datos como paso de preprocesamiento, a menos que se esté utilizando un modelo que sea explícitamente insensible a la escala. Esto asegura la robustez y el rendimiento óptimo del pipeline de Machine Learning.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center mt-12 text-sm text-gray-500">
+            <p>Reporte generado a partir de los resultados experimentales obtenidos sobre el escalado de datos para ML</p>
+        </footer>
+    </div>
+</body>
+</html>
